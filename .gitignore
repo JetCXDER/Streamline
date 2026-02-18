@@ -1,0 +1,25 @@
+# Secrets and config
+.env
+configs/token.json
+configs/credentials.json
+
+# Logs
+log/
+logs/
+
+# IDE and OS clutter
+*.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Binaries and build artifacts
+*.exe
+*.dll
+*.zip
+*.tar.gz
+*.log
+/bin/
+/obj/
+/dist/
+/build/
