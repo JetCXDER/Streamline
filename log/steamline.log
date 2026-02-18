@@ -1,0 +1,381 @@
+2025/09/29 19:01:24 main.go:353: Usage: C:\Users\rahul\AppData\Local\Temp\go-build239980611\b001\exe\main.exe -fileId <ID> -out <path> [-chunkMB N]
+2025/09/29 19:12:01 main.go:298: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:15:55 main.go:298: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:19:49 main.go:298: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:22:32 main.go:298: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:25:17 main.go:290: Starting local server on http://127.0.0.1:8080/callback
+2025/09/29 19:25:17 main.go:292: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:26:18 main.go:290: Starting local server on http://127.0.0.1:8080/callback
+2025/09/29 19:26:18 main.go:292: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:27:35 main.go:290: Starting local server on http://127.0.0.1:8080/callback
+2025/09/29 19:27:35 main.go:292: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:30:57 main.go:290: Starting local server on http://127.0.0.1:8080/callback
+2025/09/29 19:30:57 main.go:292: ListenAndServe: listen tcp 127.0.0.1:8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+2025/09/29 19:41:03 main.go:344: auth client: exchange token: oauth2: "invalid_grant" "Malformed auth code."
+2025/09/29 19:42:32 main.go:344: auth client: exchange token: oauth2: "invalid_grant" "Malformed auth code."
+2025/09/29 19:46:08 main.go:359: Extracting: corrupt test.zip (7035678 bytes)
+2025/09/29 19:46:15 main.go:428: Extracting file 1 of 4: E_U-24_Driver_win_v1.1.0/
+2025/09/29 19:46:15 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0
+2025/09/29 19:46:15 main.go:428: Extracting file 2 of 4: E_U-24_Driver_win_v1.1.0/U-24_Driver_Windows_Software Version History_11016_en.pdf
+2025/09/29 19:46:15 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0\U-24_Driver_Windows_Software Version History_11016_en.pdf
+2025/09/29 19:46:15 main.go:428: Extracting file 3 of 4: E_U-24_Driver_win_v1.1.0/ZOOM U-24 Driver_Installation_Guide_Win_E.pdf
+2025/09/29 19:46:15 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0\ZOOM U-24 Driver_Installation_Guide_Win_E.pdf
+2025/09/29 19:46:15 main.go:428: Extracting file 4 of 4: E_U-24_Driver_win_v1.1.0/ZOOM U-24.exe
+2025/09/29 19:46:15 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0\ZOOM U-24.exe
+2025/09/29 19:46:15 main.go:467: ✅ No errors encountered.
+2025/09/29 19:46:15 main.go:471: Extraction complete. 4 files processed, 0 skipped.
+2025/09/29 19:49:26 main.go:359: Extracting: corrupt test.zip (7035678 bytes)
+2025/09/29 19:49:31 main.go:428: Extracting file 1 of 4: E_U-24_Driver_win_v1.1.0/
+2025/09/29 19:49:31 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0
+2025/09/29 19:49:31 main.go:428: Extracting file 2 of 4: E_U-24_Driver_win_v1.1.0/U-24_Driver_Windows_Software Version History_11016_en.pdf
+2025/09/29 19:49:31 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0\U-24_Driver_Windows_Software Version History_11016_en.pdf
+2025/09/29 19:49:31 main.go:428: Extracting file 3 of 4: E_U-24_Driver_win_v1.1.0/ZOOM U-24 Driver_Installation_Guide_Win_E.pdf
+2025/09/29 19:49:31 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0\ZOOM U-24 Driver_Installation_Guide_Win_E.pdf
+2025/09/29 19:49:31 main.go:428: Extracting file 4 of 4: E_U-24_Driver_win_v1.1.0/ZOOM U-24.exe
+2025/09/29 19:49:31 main.go:455: Extracted: C:\Extracted\E_U-24_Driver_win_v1.1.0\ZOOM U-24.exe
+2025/09/29 19:49:31 main.go:467: ✅ No errors encountered.
+2025/09/29 19:49:31 main.go:471: Extraction complete. 4 files processed, 0 skipped.
+2025/09/30 13:33:29 main.go:404: auth client: refresh token: oauth2: token expired and refresh token is not set
+2025/09/30 14:02:09 main.go:332: Opening browser for Google login...
+2025/09/30 14:07:09 main.go:405: auth client: authorization timeout
+2025/09/30 16:48:25 main.go:332: Opening browser for Google login...
+2025/09/30 16:53:25 main.go:405: auth client: authorization timeout
+2025/09/30 16:59:17 main.go:322: Opening browser for Google login...
+2025/09/30 16:59:38 main.go:410: Extracting: Guitar Lab.zip (80444752 bytes)
+2025/09/30 16:59:47 main.go:479: Extracting file 1 of 83: Guitar Lab/
+2025/09/30 16:59:47 main.go:506: Extracted: C:\Extracted\Guitar Lab
+2025/09/30 16:59:47 main.go:479: Extracting file 2 of 83: Guitar Lab/.DS_Store
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\.DS_Store
+2025/09/30 17:00:03 main.go:479: Extracting file 3 of 83: __MACOSX/
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX
+2025/09/30 17:00:03 main.go:479: Extracting file 4 of 83: __MACOSX/Guitar Lab/
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab
+2025/09/30 17:00:03 main.go:479: Extracting file 5 of 83: __MACOSX/Guitar Lab/._.DS_Store
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\._.DS_Store
+2025/09/30 17:00:03 main.go:479: Extracting file 6 of 83: Guitar Lab/Acoustic/
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic
+2025/09/30 17:00:03 main.go:479: Extracting file 7 of 83: Guitar Lab/Acoustic/.DS_Store
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\.DS_Store
+2025/09/30 17:00:03 main.go:479: Extracting file 8 of 83: __MACOSX/Guitar Lab/Acoustic/
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic
+2025/09/30 17:00:03 main.go:479: Extracting file 9 of 83: __MACOSX/Guitar Lab/Acoustic/._.DS_Store
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\._.DS_Store
+2025/09/30 17:00:03 main.go:479: Extracting file 10 of 83: Guitar Lab/Acoustic/Dry/
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry
+2025/09/30 17:00:03 main.go:479: Extracting file 11 of 83: Guitar Lab/Acoustic/Dry/.DS_Store
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\.DS_Store
+2025/09/30 17:00:03 main.go:479: Extracting file 12 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry
+2025/09/30 17:00:03 main.go:479: Extracting file 13 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._.DS_Store
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._.DS_Store
+2025/09/30 17:00:03 main.go:479: Extracting file 14 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 15 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 16 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 17 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 18 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 19 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 20 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 21 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 22 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 23 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 24 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 25 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 26 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 27 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:03 main.go:479: Extracting file 28 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 29 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 30 of 83: Guitar Lab/Acoustic/Wet/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet
+2025/09/30 17:00:04 main.go:479: Extracting file 31 of 83: Guitar Lab/Acoustic/Wet/.DS_Store
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\.DS_Store
+2025/09/30 17:00:04 main.go:479: Extracting file 32 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet
+2025/09/30 17:00:04 main.go:479: Extracting file 33 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._.DS_Store
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._.DS_Store
+2025/09/30 17:00:04 main.go:479: Extracting file 34 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 35 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 36 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 37 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 38 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 39 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 40 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 41 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 42 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 43 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 44 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 45 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 46 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 47 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 48 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 49 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 50 of 83: Guitar Lab/Electric/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric
+2025/09/30 17:00:04 main.go:479: Extracting file 51 of 83: Guitar Lab/Electric/.DS_Store
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\.DS_Store
+2025/09/30 17:00:04 main.go:479: Extracting file 52 of 83: __MACOSX/Guitar Lab/Electric/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric
+2025/09/30 17:00:04 main.go:479: Extracting file 53 of 83: __MACOSX/Guitar Lab/Electric/._.DS_Store
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\._.DS_Store
+2025/09/30 17:00:04 main.go:479: Extracting file 54 of 83: Guitar Lab/Electric/Dry/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry
+2025/09/30 17:00:04 main.go:479: Extracting file 55 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 56 of 83: __MACOSX/Guitar Lab/Electric/Dry/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry
+2025/09/30 17:00:04 main.go:479: Extracting file 57 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 58 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 59 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 60 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 61 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 62 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 63 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 64 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 65 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 66 of 83: __MACOSX/Guitar Lab/Electric/._Dry
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\._Dry
+2025/09/30 17:00:04 main.go:479: Extracting file 67 of 83: Guitar Lab/Electric/Wet/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet
+2025/09/30 17:00:04 main.go:479: Extracting file 68 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 69 of 83: __MACOSX/Guitar Lab/Electric/Wet/
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet
+2025/09/30 17:00:04 main.go:479: Extracting file 70 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 71 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 72 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 73 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 74 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 75 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 76 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 77 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 78 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 79 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 80 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 17:00:04 main.go:479: Extracting file 81 of 83: __MACOSX/Guitar Lab/Electric/._Wet
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\._Wet
+2025/09/30 17:00:04 main.go:479: Extracting file 82 of 83: Guitar Lab/Prodigye.fm.webloc
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\Guitar Lab\Prodigye.fm.webloc
+2025/09/30 17:00:04 main.go:479: Extracting file 83 of 83: __MACOSX/Guitar Lab/._Prodigye.fm.webloc
+2025/09/30 17:00:04 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\._Prodigye.fm.webloc
+2025/09/30 17:00:04 main.go:518: ✅ No errors encountered.
+2025/09/30 17:00:04 main.go:522: Extraction complete. 83 files processed, 0 skipped.
+2025/09/30 19:30:02 main.go:410: Extracting: Guitar Lab.zip (80444752 bytes)
+2025/09/30 19:30:15 main.go:479: Extracting file 1 of 83: Guitar Lab/
+2025/09/30 19:30:15 main.go:506: Extracted: C:\Extracted\Guitar Lab
+2025/09/30 19:30:15 main.go:479: Extracting file 2 of 83: Guitar Lab/.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 3 of 83: __MACOSX/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX
+2025/09/30 19:30:35 main.go:479: Extracting file 4 of 83: __MACOSX/Guitar Lab/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab
+2025/09/30 19:30:35 main.go:479: Extracting file 5 of 83: __MACOSX/Guitar Lab/._.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\._.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 6 of 83: Guitar Lab/Acoustic/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic
+2025/09/30 19:30:35 main.go:479: Extracting file 7 of 83: Guitar Lab/Acoustic/.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 8 of 83: __MACOSX/Guitar Lab/Acoustic/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic
+2025/09/30 19:30:35 main.go:479: Extracting file 9 of 83: __MACOSX/Guitar Lab/Acoustic/._.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\._.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 10 of 83: Guitar Lab/Acoustic/Dry/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry
+2025/09/30 19:30:35 main.go:479: Extracting file 11 of 83: Guitar Lab/Acoustic/Dry/.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 12 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry
+2025/09/30 19:30:35 main.go:479: Extracting file 13 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 14 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 15 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 16 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 17 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 18 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 19 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 20 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 21 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 22 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 23 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 24 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 25 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 26 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 27 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 28 of 83: Guitar Lab/Acoustic/Dry/Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Dry\Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 29 of 83: __MACOSX/Guitar Lab/Acoustic/Dry/._Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Dry\._Prodigye - Acoustic Guitar Lab - Dry - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 30 of 83: Guitar Lab/Acoustic/Wet/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet
+2025/09/30 19:30:35 main.go:479: Extracting file 31 of 83: Guitar Lab/Acoustic/Wet/.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 32 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet
+2025/09/30 19:30:35 main.go:479: Extracting file 33 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._.DS_Store
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._.DS_Store
+2025/09/30 19:30:35 main.go:479: Extracting file 34 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 35 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Alone - 112bpm - Cmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 36 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 37 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Cowboy - 140bpm - Cmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 38 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 39 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Duel - 83bpm - Amin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 40 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 41 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Finale - 92bpm - Dmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 42 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 43 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Mood - 96bpm - Gmaj.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 44 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 45 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Reckless - 140bpm - Fmin.wav
+2025/09/30 19:30:35 main.go:479: Extracting file 46 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 47 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Reckless Solo - 140bpm - Fmin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 48 of 83: Guitar Lab/Acoustic/Wet/Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Acoustic\Wet\Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 49 of 83: __MACOSX/Guitar Lab/Acoustic/Wet/._Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Acoustic\Wet\._Prodigye - Acoustic Guitar Lab - Wet - Wish - 65bpm - Gmaj.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 50 of 83: Guitar Lab/Electric/
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric
+2025/09/30 19:30:36 main.go:479: Extracting file 51 of 83: Guitar Lab/Electric/.DS_Store
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\.DS_Store
+2025/09/30 19:30:36 main.go:479: Extracting file 52 of 83: __MACOSX/Guitar Lab/Electric/
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric
+2025/09/30 19:30:36 main.go:479: Extracting file 53 of 83: __MACOSX/Guitar Lab/Electric/._.DS_Store
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\._.DS_Store
+2025/09/30 19:30:36 main.go:479: Extracting file 54 of 83: Guitar Lab/Electric/Dry/
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry
+2025/09/30 19:30:36 main.go:479: Extracting file 55 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 56 of 83: __MACOSX/Guitar Lab/Electric/Dry/
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry
+2025/09/30 19:30:36 main.go:479: Extracting file 57 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 58 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 59 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 60 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 61 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 62 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 63 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 64 of 83: Guitar Lab/Electric/Dry/Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Dry\Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 65 of 83: __MACOSX/Guitar Lab/Electric/Dry/._Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Dry\._Prodigye - Electric Guitar Lab - Dry - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 66 of 83: __MACOSX/Guitar Lab/Electric/._Dry
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\._Dry
+2025/09/30 19:30:36 main.go:479: Extracting file 67 of 83: Guitar Lab/Electric/Wet/
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet
+2025/09/30 19:30:36 main.go:479: Extracting file 68 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 69 of 83: __MACOSX/Guitar Lab/Electric/Wet/
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet
+2025/09/30 19:30:36 main.go:479: Extracting file 70 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Chill Part A - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 71 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 72 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Chill Part B - 80bpm - Emaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 73 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 74 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Happy - 130bpm - Amaj.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 75 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 76 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Loop - 90bpm - Gmaj7.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 77 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 78 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Rock - 160bpm - Emin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 79 of 83: Guitar Lab/Electric/Wet/Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Electric\Wet\Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 80 of 83: __MACOSX/Guitar Lab/Electric/Wet/._Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\Wet\._Prodigye - Electric Guitar Lab - Wet - Sad - 65bpm - Bmin.wav
+2025/09/30 19:30:36 main.go:479: Extracting file 81 of 83: __MACOSX/Guitar Lab/Electric/._Wet
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\Electric\._Wet
+2025/09/30 19:30:36 main.go:479: Extracting file 82 of 83: Guitar Lab/Prodigye.fm.webloc
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\Guitar Lab\Prodigye.fm.webloc
+2025/09/30 19:30:36 main.go:479: Extracting file 83 of 83: __MACOSX/Guitar Lab/._Prodigye.fm.webloc
+2025/09/30 19:30:36 main.go:506: Extracted: C:\Extracted\__MACOSX\Guitar Lab\._Prodigye.fm.webloc
+2025/09/30 19:30:36 main.go:518: ✅ No errors encountered.
+2025/09/30 19:30:36 main.go:522: Extraction complete. 83 files processed, 0 skipped.

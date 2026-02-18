@@ -1,0 +1,17 @@
+.PHONY: test build lint run clean
+
+test:
+    go test ./...
+
+build:
+    go build -o streamline main.go
+
+lint:
+    golangci-lint run
+
+run:
+    go run main.go
+
+clean:
+    go clean
+    rm -f streamline
