@@ -1,0 +1,17 @@
+# Secrets and config
+.env
+
+# Logs and error reports
+logs/
+errors.json
+
+# IDE and OS clutter
+*.DS_Store
+*.swp
+.vscode/
+.idea/
+*.exe
+streamline.exe
+/logs
+/log
+tasks.ps1
