@@ -16,6 +16,7 @@ const MOCK_FILES = [
   "project/scripts/deploy.sh",
 ];
 
+// Pseudo content for dimmed panels — swap with real data before deploying
 const PSEUDO_LOGS = [
   "000 Starting extraction...",
   "001 Extracting: project/src/main.go",
@@ -225,7 +226,7 @@ function StepIndicator({ current }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PANEL 1 — File Selection
+// PANEL 1 — File Selection content
 // ─────────────────────────────────────────────────────────────────────────────
 function Panel1Content({
   fileList,
@@ -250,6 +251,7 @@ function Panel1Content({
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Title bar */}
       <div
         style={{
           background: "#000",
@@ -270,6 +272,7 @@ function Panel1Content({
         </span>
       </div>
 
+      {/* File list */}
       <div style={{ flex: 1, overflowY: "auto", padding: "6px 0" }}>
         {fileList.map((file, idx) => {
           const checked = selectedFiles.includes(file);
@@ -312,6 +315,7 @@ function Panel1Content({
         })}
       </div>
 
+      {/* Footer */}
       {isActive && (
         <div
           style={{
@@ -346,15 +350,13 @@ function Panel1Content({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PANEL 2 — Terminal
+// PANEL 2 — Terminal / Extraction content
 // ─────────────────────────────────────────────────────────────────────────────
 function Panel2Content({
   logs,
   progress,
   extracting,
   onCancel,
-  onBack,
-  cancelled,
   isActive,
   isPseudo,
 }) {
@@ -371,6 +373,7 @@ function Panel2Content({
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Title bar */}
       <div
         style={{
           background: "#000",
@@ -397,6 +400,7 @@ function Panel2Content({
         </span>
       </div>
 
+      {/* Progress bar */}
       <div
         style={{
           padding: "12px 14px",
@@ -432,11 +436,11 @@ function Panel2Content({
         </div>
       </div>
 
+      {/* Logs */}
       <div
         style={{
           flex: 1,
           overflowY: "auto",
-          minHeight: 0,
           padding: "10px 14px",
           fontFamily: "'Press Start 2P', monospace",
           fontSize: "6px",
@@ -472,7 +476,7 @@ function Panel2Content({
         <div ref={bottomRef} />
       </div>
 
-      {/* Footer — back button appears only after cancel, cancel button always present */}
+      {/* Footer */}
       {isActive && (
         <div
           style={{
@@ -480,24 +484,10 @@ function Panel2Content({
             padding: "10px 12px",
             background: "#f5f5f5",
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            justifyContent: "flex-end",
             flexShrink: 0,
           }}
         >
-          {/* Back button — only visible after cancellation */}
-          <div>
-            {cancelled && (
-              <button
-                className="retro-btn"
-                onClick={onBack}
-                style={{ fontSize: "7px", padding: "8px 10px" }}
-              >
-                ↩ BACK
-              </button>
-            )}
-          </div>
-          {/* Cancel button */}
           <button
             className="retro-btn danger"
             onClick={onCancel}
@@ -513,7 +503,7 @@ function Panel2Content({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PANEL 3 — Mission Complete
+// PANEL 3 — Mission Complete content
 // ─────────────────────────────────────────────────────────────────────────────
 function Panel3Content({
   selectedFiles,
@@ -526,6 +516,7 @@ function Panel3Content({
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Title bar */}
       <div
         style={{
           background: "#000",
@@ -540,11 +531,11 @@ function Panel3Content({
         ▶ COMPLETE
       </div>
 
+      {/* Content */}
       <div
         style={{
           flex: 1,
           overflowY: "auto",
-          minHeight: 0,
           padding: "20px 14px",
           textAlign: "center",
         }}
@@ -582,6 +573,7 @@ function Panel3Content({
           {displayFiles.length} FILE{displayFiles.length !== 1 ? "S" : ""} SAVED
         </div>
 
+        {/* File summary */}
         <div
           style={{
             border: `2px solid ${isActive ? "#000" : "#ddd"}`,
@@ -609,11 +601,13 @@ function Panel3Content({
           ))}
         </div>
 
+        {/* Download button — appears 600ms after panel becomes active */}
         {isActive && showDownload && (
           <div style={{ marginTop: "16px" }}>
             <button
               className="retro-btn download"
               onClick={() => alert("Download will be wired to backend!")}
+              style={{ animationDelay: "0ms" }}
             >
               ▼ DOWNLOAD FILES
             </button>
@@ -621,6 +615,7 @@ function Panel3Content({
         )}
       </div>
 
+      {/* Footer */}
       {isActive && (
         <div
           style={{
@@ -646,29 +641,28 @@ function Panel3Content({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — CONVEYOR BELT
-// Mobile fix: wrapper uses left+translateX trick to always anchor to true
-// viewport center, independent of any parent padding or flex alignment.
+// COMPONENT — CONVEYOR BELT (3 panels always visible, active one centered)
 // ─────────────────────────────────────────────────────────────────────────────
 function ConveyorBelt({ step, children }) {
+  // Each panel is 340px wide with 24px gap
+  // Active panel is always centered on screen
   const PANEL_WIDTH = 340;
   const GAP = 24;
+  const STRIDE = PANEL_WIDTH + GAP;
+
+  // translateX moves the whole row so active panel is centered
+  // step 1: panel[0] centered → offset = 0
+  // step 2: panel[1] centered → offset = -STRIDE
+  // step 3: panel[2] centered → offset = -STRIDE * 2
+  const translateX = -(step - 1) * STRIDE;
 
   return (
-    <div
-      style={{
-        overflow: "hidden",
-        width: "100vw",
-        position: "relative",
-        left: "50%",
-        transform: "translateX(-50%)",
-      }}
-    >
+    <div style={{ overflow: "hidden", width: "100%", maxWidth: "900px" }}>
       <div
         style={{
           display: "flex",
           gap: `${GAP}px`,
-          transform: `translateX(calc(50vw - ${PANEL_WIDTH / 2}px - ${(step - 1) * (PANEL_WIDTH + GAP)}px))`,
+          transform: `translateX(calc(50% - ${PANEL_WIDTH / 2}px + ${translateX}px))`,
           transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
           willChange: "transform",
         }}
@@ -680,7 +674,7 @@ function ConveyorBelt({ step, children }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — PANEL WRAPPER
+// COMPONENT — SINGLE PANEL WRAPPER
 // ─────────────────────────────────────────────────────────────────────────────
 function PanelWrapper({ isActive, children }) {
   return (
@@ -717,7 +711,6 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
   const [extracting, setExtracting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showDownload, setShowDownload] = useState(false);
-  const [cancelled, setCancelled] = useState(false);
   const eventSourceRef = useRef(null);
   const cancelledRef = useRef(false);
 
@@ -729,13 +722,13 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     );
   };
 
+  // ── Step 1 → 2 ───────────────────────────────────────────────────────────
   const startExtraction = async () => {
     if (selectedFiles.length === 0) return;
     setStep(2);
     setLogs([]);
     setProgress(0);
     setShowDownload(false);
-    setCancelled(false);
     setExtracting(true);
     cancelledRef.current = false;
 
@@ -762,7 +755,8 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     // };
     // es.onerror = () => {
     //   es.close(); setExtracting(false);
-    //   setProgress(100); setStep(3);
+    //   setProgress(100);
+    //   setStep(3);
     //   setTimeout(() => setShowDownload(true), 600);
     // };
 
@@ -782,13 +776,16 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
       setExtracting(false);
       setProgress(100);
       await new Promise((res) => setTimeout(res, 600));
+      // Step 2 → 3
       setStep(3);
+      // Download button appears 600ms after panel 3 slides in
       setTimeout(() => setShowDownload(true), 600);
     } else {
       setExtracting(false);
     }
   };
 
+  // ── Cancel ───────────────────────────────────────────────────────────────
   const cancelProcess = () => {
     if (!extracting) return;
     cancelledRef.current = true;
@@ -800,17 +797,9 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     addLog("Aborted by user.");
     setExtracting(false);
     setProgress(0);
-    setCancelled(true); // triggers back button to appear
   };
 
-  // Back to step 1 after cancellation
-  const goBack = () => {
-    setStep(1);
-    setLogs([]);
-    setProgress(0);
-    setCancelled(false);
-  };
-
+  // ── Reset ────────────────────────────────────────────────────────────────
   const reset = () => {
     setStep(1);
     setSelectedFiles([]);
@@ -818,7 +807,6 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     setProgress(0);
     setExtracting(false);
     setShowDownload(false);
-    setCancelled(false);
     cancelledRef.current = false;
   };
 
@@ -837,7 +825,7 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
           position: "relative",
         }}
       >
-        {/* HEADER */}
+        {/* ── HEADER ── */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <div
             style={{
@@ -863,11 +851,12 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
           </div>
         </div>
 
-        {/* STEP INDICATOR */}
+        {/* ── STEP INDICATOR ── */}
         <StepIndicator current={step} />
 
-        {/* CONVEYOR BELT */}
+        {/* ── CONVEYOR BELT — 3 panels always present ── */}
         <ConveyorBelt step={step}>
+          {/* PANEL 1 — File Selection */}
           <PanelWrapper isActive={step === 1}>
             <Panel1Content
               fileList={fileList}
@@ -877,18 +866,20 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
               isActive={step === 1}
             />
           </PanelWrapper>
+
+          {/* PANEL 2 — Terminal */}
           <PanelWrapper isActive={step === 2}>
             <Panel2Content
               logs={logs}
               progress={progress}
               extracting={extracting}
               onCancel={cancelProcess}
-              onBack={goBack}
-              cancelled={cancelled}
               isActive={step === 2}
               isPseudo={step < 2}
             />
           </PanelWrapper>
+
+          {/* PANEL 3 — Mission Complete */}
           <PanelWrapper isActive={step === 3}>
             <Panel3Content
               selectedFiles={selectedFiles}
@@ -900,7 +891,7 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
           </PanelWrapper>
         </ConveyorBelt>
 
-        {/* FOOTER */}
+        {/* ── FOOTER ── */}
         <div
           style={{
             marginTop: "32px",
