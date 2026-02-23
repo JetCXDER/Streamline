@@ -647,16 +647,22 @@ function ConveyorBelt({ step, children }) {
   // Each panel is 340px wide with 24px gap
   // Active panel is always centered on screen
   const PANEL_WIDTH = 340;
-  const GAP = 400;
+  const GAP = 40;
   const STRIDE = PANEL_WIDTH + GAP;
 
+  // translateX moves the whole row so active panel is centered
+  // step 1: panel[0] centered → offset = 0
+  // step 2: panel[1] centered → offset = -STRIDE
+  // step 3: panel[2] centered → offset = -STRIDE * 2
+  const translateX = -(step - 1) * STRIDE;
+
   return (
-    <div style={{ overflow: "hidden", width: "100vw" }}>
+    <div style={{ overflow: "hidden", width: "100%" }}>
       <div
         style={{
           display: "flex",
           gap: `${GAP}px`,
-          transform: `translateX(calc(50vw - ${PANEL_WIDTH / 2}px - ${(step - 1) * (PANEL_WIDTH + GAP)}px))`,
+          transform: `translateX(calc(50% - ${PANEL_WIDTH / 2}px + ${translateX}px))`,
           transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
           willChange: "transform",
         }}
