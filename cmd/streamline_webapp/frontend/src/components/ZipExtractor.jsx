@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Checkbox, Chip } from "@material-tailwind/react";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MOCK DATA
-// Replace with real API response from /listZip when backend is wired
+// MOCK DATA — Replace with real API response from /listZip when backend ready
 // ─────────────────────────────────────────────────────────────────────────────
 const MOCK_FILES = [
   "project/src/main.go",
@@ -18,117 +16,226 @@ const MOCK_FILES = [
   "project/scripts/deploy.sh",
 ];
 
+// Pseudo content for dimmed panels — swap with real data before deploying
+const PSEUDO_LOGS = [
+  "000 Starting extraction...",
+  "001 Extracting: project/src/main.go",
+  "002 ✓ Done: project/src/main.go",
+  "003 Extracting: project/assets/logo.png",
+  "004 ✓ Done: project/assets/logo.png",
+  "005 All files extracted successfully.",
+];
+
+const PSEUDO_DONE_FILES = [
+  "project/src/main.go",
+  "project/src/config.go",
+  "project/assets/logo.png",
+];
+
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — NAVBAR (extract to Navbar.jsx later)
+// GLOBAL STYLES
 // ─────────────────────────────────────────────────────────────────────────────
-function Navbar() {
+const GLOBAL_STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+  * { box-sizing: border-box; }
+  body { background: #ffffff; margin: 0; padding: 0; overflow-x: hidden; }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  @keyframes glitchColor {
+    0%,60%,100% { text-shadow: 3px 3px 0 #ccc; color: #000; }
+    62%  { text-shadow: -2px 0 #ff0000, 2px 0 #0000ff; }
+    64%  { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
+    66%  { text-shadow: 3px 3px 0 #ccc; }
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
+
+  @keyframes pixelFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes flicker {
+    0%,19%,21%,23%,25%,54%,56%,100% { opacity: 1; }
+    20%,22%,24%,55% { opacity: 0.6; }
+  }
+
+  @keyframes downloadAppear {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .retro-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 10px 16px;
+    border: 3px solid #000;
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+    transition: all 0.1s;
+    letter-spacing: 1px;
+  }
+  .retro-btn:hover:not(:disabled) {
+    background: #000; color: #fff;
+    box-shadow: 2px 2px 0 #000;
+    transform: translate(2px, 2px);
+  }
+  .retro-btn:active:not(:disabled) {
+    box-shadow: 0 0 0 #000;
+    transform: translate(4px, 4px);
+  }
+  .retro-btn:disabled {
+    opacity: 0.3; cursor: not-allowed;
+    box-shadow: 2px 2px 0 #999; border-color: #999;
+  }
+  .retro-btn.primary {
+    background: #000; color: #fff;
+    box-shadow: 4px 4px 0 #555;
+  }
+  .retro-btn.primary:hover:not(:disabled) {
+    background: #333;
+    box-shadow: 2px 2px 0 #555;
+    transform: translate(2px, 2px);
+  }
+  .retro-btn.danger {
+    border-color: #cc0000; color: #cc0000;
+    box-shadow: 4px 4px 0 #cc0000;
+  }
+  .retro-btn.danger:hover:not(:disabled) {
+    background: #cc0000; color: #fff;
+    box-shadow: 2px 2px 0 #cc0000;
+    transform: translate(2px, 2px);
+  }
+  .retro-btn.download {
+    border-color: #000; background: #000; color: #fff;
+    box-shadow: 4px 4px 0 #555;
+    font-size: 9px; padding: 14px 24px;
+    animation: downloadAppear 0.4s ease forwards;
+  }
+  .retro-btn.download:hover {
+    background: #333;
+    box-shadow: 2px 2px 0 #555;
+    transform: translate(2px, 2px);
+  }
+
+  .pixel-checkbox {
+    width: 16px; height: 16px;
+    border: 2px solid #000; background: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; font-size: 10px;
+  }
+  .pixel-checkbox.checked { background: #000; color: #fff; }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #fff; border-left: 2px solid #000; }
+  ::-webkit-scrollbar-thumb { background: #000; }
+`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPONENT — STEP INDICATOR
+// ─────────────────────────────────────────────────────────────────────────────
+function StepIndicator({ current }) {
+  const steps = ["SELECT", "EXTRACT", "DONE"];
   return (
     <div
       style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        height: "48px",
-        background: "transparent",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 32px",
-        zIndex: 100,
+        justifyContent: "center",
+        gap: "0",
+        marginBottom: "32px",
       }}
     >
-      <div style={{ display: "flex", gap: "24px" }}>
-        {["File", "Options", "Help"].map((label) => (
-          <button
-            key={label}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#484f58",
-              fontSize: "12px",
-              fontFamily: "monospace",
-              cursor: "pointer",
-              letterSpacing: "0.5px",
-              padding: "4px 0",
-              transition: "color 0.15s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#8b949e")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#484f58")}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-      <div style={{ width: "80px" }} />
+      {steps.map((label, idx) => {
+        const num = idx + 1;
+        const isActive = current === num;
+        const isDone = current > num;
+        return (
+          <React.Fragment key={label}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  border: "3px solid #000",
+                  background: isActive ? "#000" : isDone ? "#000" : "#fff",
+                  color: isActive || isDone ? "#fff" : "#000",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "12px",
+                  fontFamily: "'Press Start 2P', monospace",
+                  boxShadow: isActive ? "4px 4px 0 #555" : "2px 2px 0 #ccc",
+                  transition: "all 0.3s",
+                  animation: isActive ? "flicker 4s infinite" : "none",
+                }}
+              >
+                {isDone ? "✓" : `0${num}`}
+              </div>
+              <span
+                style={{
+                  fontSize: "7px",
+                  fontFamily: "'Press Start 2P', monospace",
+                  color: isActive ? "#000" : "#999",
+                  letterSpacing: "1px",
+                }}
+              >
+                {label}
+              </span>
+            </div>
+            {idx < steps.length - 1 && (
+              <div
+                style={{
+                  width: "80px",
+                  height: "3px",
+                  background: current > num ? "#000" : "#ccc",
+                  marginBottom: "20px",
+                  transition: "background 0.3s",
+                }}
+              />
+            )}
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — BRANDING (extract to Branding.jsx later)
+// PANEL 1 — File Selection content
 // ─────────────────────────────────────────────────────────────────────────────
-function Branding() {
-  return (
-    <div style={{ textAlign: "center", marginBottom: "28px" }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "10px",
-        }}
-      >
-        <span style={{ fontSize: "26px" }}>⚡</span>
-        <span
-          style={{
-            color: "#e6edf3",
-            fontSize: "28px",
-            fontFamily: "'Georgia', serif",
-            fontWeight: "700",
-            letterSpacing: "-0.5px",
-          }}
-        >
-          Streamline
-        </span>
-      </div>
-      <div
-        style={{
-          color: "#484f58",
-          fontSize: "11px",
-          fontFamily: "monospace",
-          letterSpacing: "2px",
-          textTransform: "uppercase",
-          marginTop: "4px",
-        }}
-      >
-        Extract. Direct. Local.
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — SPLIT PANEL CONTAINER (extract to SplitPanel.jsx later)
-// Single panel that cracks open — left half slides left, right half slides right
-// Terminal grows out from the gap between them
-// ─────────────────────────────────────────────────────────────────────────────
-function SplitPanel({
+function Panel1Content({
   fileList,
   selectedFiles,
   onToggle,
-  logs,
-  extracting,
-  done,
-  phase,
+  onNext,
+  isActive,
 }) {
   const allSelected = selectedFiles.length === fileList.length;
-  const bottomRef = useRef(null);
-  const isSplit = phase !== "select";
-
-  useEffect(() => {
-    if (isSplit) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [logs, isSplit]);
 
   const toggleAll = () => {
     if (allSelected) {
@@ -143,149 +250,59 @@ function SplitPanel({
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: isSplit ? "1000px" : "680px",
-        transition: "max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-        position: "relative",
-        display: "flex",
-        gap: isSplit ? "16px" : "0px",
-      }}
-    >
-      {/* ── LEFT HALF — file list panel, slides left on split ── */}
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Title bar */}
       <div
         style={{
-          flex: isSplit ? "0 0 340px" : "1",
-          background: "#161b22",
-          border: `1px solid ${isSplit ? "#30363d" : done ? "#3fb950" : "#30363d"}`,
-          borderRadius: "14px",
-          overflow: "hidden",
-          boxShadow: isSplit
-            ? "0 8px 32px rgba(0,0,0,0.3)"
-            : done
-              ? "0 8px 40px rgba(63,185,80,0.2)"
-              : "0 8px 40px rgba(0,0,0,0.5)",
-          transform: isSplit ? "translateX(0)" : "translateX(0)",
-          transition:
-            "flex 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.3s ease",
-          opacity: isSplit ? 0.6 : 1,
+          background: "#000",
+          color: "#fff",
+          padding: "10px 14px",
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: "8px",
+          letterSpacing: "1px",
           display: "flex",
-          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexShrink: 0,
         }}
       >
-        {/* File list header */}
-        <div
-          style={{
-            background: "#0d1117",
-            borderBottom: "1px solid #21262d",
-            padding: "14px 18px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexShrink: 0,
-          }}
-        >
-          <span
-            style={{
-              color: "#e6edf3",
-              fontFamily: "monospace",
-              fontSize: "12px",
-              fontWeight: "600",
-              letterSpacing: "0.5px",
-            }}
-          >
-            FILES IN ARCHIVE
-          </span>
-          {!isSplit && (
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <Chip
-                value={`${selectedFiles.length} / ${fileList.length}`}
-                size="sm"
-                style={{
-                  background: "#1f3a2a",
-                  color: "#3fb950",
-                  border: "1px solid #2ea043",
-                  fontSize: "10px",
-                  padding: "2px 8px",
-                }}
-              />
-              <button
-                onClick={toggleAll}
-                style={{
-                  fontSize: "11px",
-                  color: "#58a6ff",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: "monospace",
-                }}
-              >
-                {allSelected ? "Deselect All" : "Select All"}
-              </button>
-            </div>
-          )}
-          {isSplit && (
-            <Chip
-              value={`${selectedFiles.length} selected`}
-              size="sm"
-              style={{
-                background: "#1f3a2a",
-                color: "#3fb950",
-                border: "1px solid #2ea043",
-                fontSize: "10px",
-                padding: "2px 8px",
-              }}
-            />
-          )}
-        </div>
+        <span>▶ SELECT FILES</span>
+        <span style={{ color: "#999", fontSize: "7px" }}>
+          {selectedFiles.length}/{fileList.length}
+        </span>
+      </div>
 
-        {/* File list body */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "8px 4px" }}>
-          {fileList.map((file) => (
+      {/* File list */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "6px 0" }}>
+        {fileList.map((file, idx) => {
+          const checked = selectedFiles.includes(file);
+          return (
             <div
               key={file}
-              onClick={() => {
-                if (!isSplit) onToggle(file);
-              }}
+              onClick={() => isActive && onToggle(file)}
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
-                padding: "8px 14px",
-                borderRadius: "6px",
-                cursor: isSplit ? "default" : "pointer",
-                background: selectedFiles.includes(file)
-                  ? "#1f3a2a"
-                  : "transparent",
-                transition: "background 0.15s",
-                margin: "1px 4px",
-              }}
-              onMouseEnter={(e) => {
-                if (!isSplit && !selectedFiles.includes(file))
-                  e.currentTarget.style.background = "#21262d";
-              }}
-              onMouseLeave={(e) => {
-                if (!isSplit && !selectedFiles.includes(file))
-                  e.currentTarget.style.background = "transparent";
+                padding: "8px 12px",
+                cursor: isActive ? "pointer" : "default",
+                background: checked
+                  ? "#000"
+                  : idx % 2 === 0
+                    ? "#fff"
+                    : "#f5f5f5",
+                borderBottom: "1px solid #e0e0e0",
+                transition: "background 0.1s",
               }}
             >
-              <Checkbox
-                checked={selectedFiles.includes(file)}
-                onChange={() => {
-                  if (!isSplit) onToggle(file);
-                }}
-                onClick={(e) => e.stopPropagation()}
-                color="green"
-                disabled={isSplit}
-                style={{ width: "14px", height: "14px" }}
-              />
+              <div className={`pixel-checkbox ${checked ? "checked" : ""}`}>
+                {checked && "■"}
+              </div>
               <span
                 style={{
-                  color: selectedFiles.includes(file) ? "#3fb950" : "#484f58",
-                  fontFamily: "monospace",
-                  fontSize: "12px",
-                  transition: "color 0.15s",
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: "7px",
+                  color: checked ? "#fff" : "#000",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
@@ -294,315 +311,386 @@ function SplitPanel({
                 {file}
               </span>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
-      {/* ── RIGHT HALF — terminal, grows out from the crack ── */}
-      <div
-        style={{
-          flex: isSplit ? "1" : "0",
-          minWidth: 0,
-          background: "#0d1117",
-          border: `1px solid ${done ? "#3fb950" : extracting ? "#2ea043" : "#30363d"}`,
-          borderRadius: "14px",
-          overflow: "hidden",
-          opacity: isSplit ? 1 : 0,
-          transform: isSplit ? "scaleX(1)" : "scaleX(0)",
-          transformOrigin: "left center",
-          transition:
-            "flex 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease 0.2s, transform 0.5s cubic-bezier(0.4,0,0.2,1), border-color 0.3s ease",
-          boxShadow: done
-            ? "0 8px 40px rgba(63,185,80,0.25)"
-            : extracting
-              ? "0 8px 40px rgba(63,185,80,0.15)"
-              : "0 8px 32px rgba(0,0,0,0.4)",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* Terminal header */}
+      {/* Footer */}
+      {isActive && (
         <div
           style={{
-            background: "#161b22",
-            borderBottom: "1px solid #21262d",
-            padding: "14px 18px",
+            borderTop: "3px solid #000",
+            padding: "10px 12px",
             display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
-            gap: "8px",
+            background: "#f5f5f5",
             flexShrink: 0,
           }}
         >
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              background: "#f85149",
-              opacity: 0.8,
-            }}
-          />
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              background: "#e3b341",
-              opacity: 0.8,
-            }}
-          />
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              background: "#3fb950",
-              opacity: 0.8,
-            }}
-          />
-          <span
-            style={{
-              color: "#484f58",
-              fontFamily: "monospace",
-              fontSize: "11px",
-              marginLeft: "8px",
-              letterSpacing: "0.5px",
-            }}
+          <button
+            className="retro-btn"
+            onClick={toggleAll}
+            style={{ fontSize: "7px", padding: "8px 10px" }}
           >
-            OUTPUT LOG
-          </span>
+            {allSelected ? "☐ DESELECT" : "■ ALL"}
+          </button>
+          <button
+            className="retro-btn primary"
+            onClick={onNext}
+            disabled={selectedFiles.length === 0}
+            style={{ fontSize: "7px", padding: "8px 10px" }}
+          >
+            EXTRACT ▶
+          </button>
         </div>
+      )}
+    </div>
+  );
+}
 
-        {/* Terminal body */}
-        <div
+// ─────────────────────────────────────────────────────────────────────────────
+// PANEL 2 — Terminal / Extraction content
+// ─────────────────────────────────────────────────────────────────────────────
+function Panel2Content({
+  logs,
+  progress,
+  extracting,
+  onCancel,
+  isActive,
+  isPseudo,
+}) {
+  const bottomRef = useRef(null);
+  const displayLogs = isPseudo ? PSEUDO_LOGS : logs;
+  const displayProgress = isPseudo ? 60 : progress;
+  const totalBlocks = 16;
+  const filledBlocks = Math.round((displayProgress / 100) * totalBlocks);
+  const bar = "█".repeat(filledBlocks) + "░".repeat(totalBlocks - filledBlocks);
+
+  useEffect(() => {
+    if (isActive) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [logs, isActive]);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Title bar */}
+      <div
+        style={{
+          background: "#000",
+          color: "#fff",
+          padding: "10px 14px",
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: "8px",
+          letterSpacing: "1px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexShrink: 0,
+        }}
+      >
+        <span
           style={{
-            flex: 1,
-            overflowY: "auto",
-            padding: "16px",
-            fontFamily: "'Courier New', Courier, monospace",
-            fontSize: "12px",
-            lineHeight: "1.8",
+            animation: isActive && extracting ? "flicker 2s infinite" : "none",
           }}
         >
-          {logs.length === 0 ? (
-            <span style={{ color: "#30363d" }}>Initializing...</span>
-          ) : (
-            logs.map((line, idx) => (
-              <div
-                key={idx}
-                style={{
-                  marginBottom: "2px",
-                  animation: "splitLineIn 0.3s ease forwards",
-                  animationDelay: `${(idx % 5) * 50}ms`,
-                  opacity: 0,
-                }}
-              >
-                <span style={{ color: "#3fb950" }}>›</span>{" "}
-                <span
-                  style={{
-                    color: line.startsWith("✓")
-                      ? "#3fb950"
-                      : line.startsWith("Error") || line.startsWith("Aborted")
-                        ? "#f85149"
-                        : line.startsWith("Starting") || line.startsWith("All")
-                          ? "#58a6ff"
-                          : "#c9d1d9",
-                  }}
-                >
-                  {line}
-                </span>
-              </div>
-            ))
-          )}
-          <div ref={bottomRef} />
+          {isActive && extracting ? "▶ EXTRACTING..." : "▶ TERMINAL"}
+        </span>
+        <span style={{ color: "#999", fontSize: "7px" }}>
+          {displayProgress}%
+        </span>
+      </div>
+
+      {/* Progress bar */}
+      <div
+        style={{
+          padding: "12px 14px",
+          borderBottom: "2px solid #e0e0e0",
+          background: "#f5f5f5",
+          flexShrink: 0,
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "9px",
+            letterSpacing: "1px",
+            color: "#000",
+            wordBreak: "break-all",
+          }}
+        >
+          [{bar}]
         </div>
+        <div
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "6px",
+            color: "#666",
+            marginTop: "6px",
+          }}
+        >
+          {displayProgress === 100
+            ? "■ COMPLETE"
+            : isActive && extracting
+              ? "■ PROCESSING..."
+              : "□ WAITING..."}
+        </div>
+      </div>
+
+      {/* Logs */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: "10px 14px",
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: "6px",
+          lineHeight: "2",
+          background: "#fff",
+        }}
+      >
+        {displayLogs.length === 0 ? (
+          <span style={{ color: "#ccc" }}>
+            INITIALIZING
+            <span style={{ animation: "blink 1s infinite" }}>_</span>
+          </span>
+        ) : (
+          displayLogs.map((line, idx) => (
+            <div
+              key={idx}
+              style={{
+                marginBottom: "2px",
+                animation: isActive ? "pixelFadeIn 0.2s ease forwards" : "none",
+                color: line.includes("✓")
+                  ? "#006600"
+                  : line.includes("Error") || line.includes("Aborted")
+                    ? "#cc0000"
+                    : line.includes("Starting") || line.includes("All")
+                      ? "#000080"
+                      : "#000",
+              }}
+            >
+              {line}
+            </div>
+          ))
+        )}
+        <div ref={bottomRef} />
+      </div>
+
+      {/* Footer */}
+      {isActive && (
+        <div
+          style={{
+            borderTop: "3px solid #000",
+            padding: "10px 12px",
+            background: "#f5f5f5",
+            display: "flex",
+            justifyContent: "flex-end",
+            flexShrink: 0,
+          }}
+        >
+          <button
+            className="retro-btn danger"
+            onClick={onCancel}
+            disabled={!extracting}
+            style={{ fontSize: "7px", padding: "8px 10px" }}
+          >
+            ■ CANCEL
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PANEL 3 — Mission Complete content
+// ─────────────────────────────────────────────────────────────────────────────
+function Panel3Content({
+  selectedFiles,
+  onReset,
+  isActive,
+  showDownload,
+  isPseudo,
+}) {
+  const displayFiles = isPseudo ? PSEUDO_DONE_FILES : selectedFiles;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Title bar */}
+      <div
+        style={{
+          background: "#000",
+          color: "#fff",
+          padding: "10px 14px",
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: "8px",
+          letterSpacing: "1px",
+          flexShrink: 0,
+        }}
+      >
+        ▶ COMPLETE
+      </div>
+
+      {/* Content */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: "20px 14px",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "40px",
+            marginBottom: "12px",
+            animation: isActive ? "flicker 3s infinite" : "none",
+            color: isActive ? "#000" : "#ccc",
+          }}
+        >
+          ✓
+        </div>
+        <div
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "8px",
+            letterSpacing: "1px",
+            marginBottom: "8px",
+            color: isActive ? "#000" : "#bbb",
+          }}
+        >
+          FILES EXTRACTED
+        </div>
+        <div
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "6px",
+            color: isActive ? "#666" : "#ccc",
+            marginBottom: "16px",
+          }}
+        >
+          {displayFiles.length} FILE{displayFiles.length !== 1 ? "S" : ""} SAVED
+        </div>
+
+        {/* File summary */}
+        <div
+          style={{
+            border: `2px solid ${isActive ? "#000" : "#ddd"}`,
+            background: "#f5f5f5",
+            padding: "8px",
+            textAlign: "left",
+            maxHeight: "120px",
+            overflowY: "auto",
+          }}
+        >
+          {displayFiles.map((file, idx) => (
+            <div
+              key={file}
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: "6px",
+                color: isActive ? "#333" : "#bbb",
+                padding: "3px 0",
+                borderBottom:
+                  idx < displayFiles.length - 1 ? "1px solid #e0e0e0" : "none",
+              }}
+            >
+              ✓ {file}
+            </div>
+          ))}
+        </div>
+
+        {/* Download button — appears 600ms after panel becomes active */}
+        {isActive && showDownload && (
+          <div style={{ marginTop: "16px" }}>
+            <button
+              className="retro-btn download"
+              onClick={() => alert("Download will be wired to backend!")}
+              style={{ animationDelay: "0ms" }}
+            >
+              ▼ DOWNLOAD FILES
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      {isActive && (
+        <div
+          style={{
+            borderTop: "3px solid #000",
+            padding: "10px 12px",
+            background: "#f5f5f5",
+            display: "flex",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <button
+            className="retro-btn"
+            onClick={onReset}
+            style={{ fontSize: "7px", padding: "8px 10px" }}
+          >
+            ↩ START OVER
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPONENT — CONVEYOR BELT (3 panels always visible, active one centered)
+// ─────────────────────────────────────────────────────────────────────────────
+function ConveyorBelt({ step, children }) {
+  // Each panel is 340px wide with 24px gap
+  // Active panel is always centered on screen
+  const PANEL_WIDTH = 340;
+  const GAP = 400;
+  const STRIDE = PANEL_WIDTH + GAP;
+
+  return (
+    <div style={{ overflow: "hidden", width: "100vw" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: `${GAP}px`,
+          transform: `translateX(calc(50vw - ${PANEL_WIDTH / 2}px - ${(step - 1) * (PANEL_WIDTH + GAP)}px))`,
+          transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+          willChange: "transform",
+        }}
+      >
+        {children}
       </div>
     </div>
   );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — ACTION BUTTONS + PROGRESS (extract to Buttons.jsx later)
+// COMPONENT — SINGLE PANEL WRAPPER
 // ─────────────────────────────────────────────────────────────────────────────
-function ActionButtons({
-  onExtract,
-  onCancel,
-  onReset,
-  extracting,
-  noneSelected,
-  progress,
-  done,
-  phase,
-}) {
-  const isSplit = phase !== "select";
-
+function PanelWrapper({ isActive, children }) {
   return (
     <div
       style={{
+        width: "340px",
+        height: "460px",
+        flexShrink: 0,
+        border: `3px solid ${isActive ? "#000" : "#ccc"}`,
+        boxShadow: isActive ? "6px 6px 0 #000" : "3px 3px 0 #ccc",
+        background: "#fff",
+        opacity: isActive ? 1 : 0.4,
+        transform: isActive ? "scale(1)" : "scale(0.97)",
+        transition:
+          "opacity 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease",
+        pointerEvents: isActive ? "auto" : "none",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        gap: "10px",
-        width: "100%",
-        maxWidth: isSplit ? "1000px" : "680px",
-        transition: "max-width 0.5s cubic-bezier(0.4,0,0.2,1)",
       }}
     >
-      <div style={{ display: "flex", gap: "12px" }}>
-        {!done ? (
-          <button
-            onClick={onExtract}
-            disabled={noneSelected || extracting}
-            style={{
-              flex: 1,
-              padding: "13px",
-              borderRadius: "8px",
-              border: "1px solid",
-              borderColor: noneSelected || extracting ? "#30363d" : "#2ea043",
-              background: noneSelected || extracting ? "#161b22" : "#238636",
-              color: noneSelected || extracting ? "#484f58" : "#ffffff",
-              fontSize: "13px",
-              fontWeight: "700",
-              fontFamily: "monospace",
-              letterSpacing: "1px",
-              cursor: noneSelected || extracting ? "not-allowed" : "pointer",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              if (!noneSelected && !extracting)
-                e.currentTarget.style.background = "#2ea043";
-            }}
-            onMouseLeave={(e) => {
-              if (!noneSelected && !extracting)
-                e.currentTarget.style.background = "#238636";
-            }}
-          >
-            {extracting ? "⏳ EXTRACTING..." : "⚡ EXTRACT NOW"}
-          </button>
-        ) : (
-          <button
-            onClick={onReset}
-            style={{
-              flex: 1,
-              padding: "13px",
-              borderRadius: "8px",
-              border: "1px solid #58a6ff",
-              background: "#1c2d3f",
-              color: "#58a6ff",
-              fontSize: "13px",
-              fontWeight: "700",
-              fontFamily: "monospace",
-              letterSpacing: "1px",
-              cursor: "pointer",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#21364f";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#1c2d3f";
-            }}
-          >
-            ↩ SELECT NEW FILES
-          </button>
-        )}
-
-        <button
-          onClick={onCancel}
-          disabled={!extracting}
-          style={{
-            flex: 1,
-            padding: "13px",
-            borderRadius: "8px",
-            border: "1px solid",
-            borderColor: !extracting ? "#30363d" : "#f85149",
-            background: !extracting ? "#161b22" : "#3d1a1a",
-            color: !extracting ? "#484f58" : "#f85149",
-            fontSize: "13px",
-            fontWeight: "700",
-            fontFamily: "monospace",
-            letterSpacing: "1px",
-            cursor: !extracting ? "not-allowed" : "pointer",
-            transition: "all 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            if (extracting) e.currentTarget.style.background = "#4d1f1f";
-          }}
-          onMouseLeave={(e) => {
-            if (extracting) e.currentTarget.style.background = "#3d1a1a";
-          }}
-        >
-          ✕ CANCEL
-        </button>
-      </div>
-
-      {/* Progress Bar */}
-      {(extracting || done) && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span
-              style={{
-                color: "#484f58",
-                fontFamily: "monospace",
-                fontSize: "10px",
-                letterSpacing: "1px",
-              }}
-            >
-              {done ? "COMPLETE" : "EXTRACTING"}
-            </span>
-            <span
-              style={{
-                color: "#3fb950",
-                fontFamily: "monospace",
-                fontSize: "10px",
-              }}
-            >
-              {progress}%
-            </span>
-          </div>
-          <div
-            style={{
-              background: "#21262d",
-              borderRadius: "4px",
-              height: "5px",
-              overflow: "hidden",
-              border: "1px solid #30363d",
-            }}
-          >
-            <div
-              style={{
-                height: "100%",
-                width: `${progress}%`,
-                background: done
-                  ? "#3fb950"
-                  : "linear-gradient(90deg, #238636, #3fb950)",
-                borderRadius: "4px",
-                transition: "width 0.4s ease",
-                boxShadow: "0 0 8px rgba(63,185,80,0.5)",
-              }}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Done Banner */}
-      {done && (
-        <div
-          style={{
-            background: "#1f3a2a",
-            border: "1px solid #2ea043",
-            borderRadius: "8px",
-            padding: "11px 16px",
-            textAlign: "center",
-            color: "#3fb950",
-            fontFamily: "monospace",
-            fontSize: "12px",
-            fontWeight: "600",
-            letterSpacing: "0.5px",
-          }}
-        >
-          ✓ EXTRACTION COMPLETE — FILES SAVED TO YOUR LOCAL DRIVE
-        </div>
-      )}
+      {children}
     </div>
   );
 }
@@ -611,12 +699,12 @@ function ActionButtons({
 // MAIN — ZipExtractor
 // ─────────────────────────────────────────────────────────────────────────────
 export default function ZipExtractor({ fileList = MOCK_FILES }) {
+  const [step, setStep] = useState(1);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [logs, setLogs] = useState([]);
   const [extracting, setExtracting] = useState(false);
-  const [done, setDone] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState("select"); // "select" | "split"
+  const [showDownload, setShowDownload] = useState(false);
   const eventSourceRef = useRef(null);
   const cancelledRef = useRef(false);
 
@@ -628,20 +716,16 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     );
   };
 
-  // ── Extract ──────────────────────────────────────────────────────────────
+  // ── Step 1 → 2 ───────────────────────────────────────────────────────────
   const startExtraction = async () => {
     if (selectedFiles.length === 0) return;
-
-    // Trigger the split — panel cracks open
-    setPhase("split");
-
-    setExtracting(true);
-    setDone(false);
-    setProgress(0);
+    setStep(2);
     setLogs([]);
+    setProgress(0);
+    setShowDownload(false);
+    setExtracting(true);
     cancelledRef.current = false;
 
-    // Small delay to let split animation play before logs start
     await new Promise((res) => setTimeout(res, 500));
     addLog(`Starting extraction of ${selectedFiles.length} file(s)...`);
 
@@ -663,7 +747,12 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     //     setProgress(Math.round((completed / selectedFiles.length) * 100));
     //   }
     // };
-    // es.onerror = () => { es.close(); setExtracting(false); setDone(true); setProgress(100); };
+    // es.onerror = () => {
+    //   es.close(); setExtracting(false);
+    //   setProgress(100);
+    //   setStep(3);
+    //   setTimeout(() => setShowDownload(true), 600);
+    // };
 
     for (let i = 0; i < selectedFiles.length; i++) {
       if (cancelledRef.current) break;
@@ -678,93 +767,136 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
 
     if (!cancelledRef.current) {
       addLog("All files extracted successfully.");
-      setDone(true);
+      setExtracting(false);
       setProgress(100);
+      await new Promise((res) => setTimeout(res, 600));
+      // Step 2 → 3
+      setStep(3);
+      // Download button appears 600ms after panel 3 slides in
+      setTimeout(() => setShowDownload(true), 600);
+    } else {
+      setExtracting(false);
     }
-    setExtracting(false);
   };
 
   // ── Cancel ───────────────────────────────────────────────────────────────
-  const cancelProcess = async () => {
-    if (!extracting) {
-      addLog("No active process to cancel.");
-      return;
-    }
+  const cancelProcess = () => {
+    if (!extracting) return;
     cancelledRef.current = true;
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
       eventSourceRef.current = null;
     }
-    // await fetch("/cancel", { method: "POST" }); // uncomment when backend ready
+    // await fetch("/cancel", { method: "POST" });
     addLog("Aborted by user.");
     setExtracting(false);
-    setDone(false);
     setProgress(0);
   };
 
-  // ── Reset — panels slide back together ──────────────────────────────────
-  const resetToSelection = async () => {
-    setPhase("select");
+  // ── Reset ────────────────────────────────────────────────────────────────
+  const reset = () => {
+    setStep(1);
     setSelectedFiles([]);
     setLogs([]);
-    setDone(false);
     setProgress(0);
+    setExtracting(false);
+    setShowDownload(false);
+    cancelledRef.current = false;
   };
 
   return (
     <>
-      <style>{`
-        @keyframes splitLineIn {
-          from { opacity: 0; transform: translateY(6px); }
-          to   { opacity: 1; transform: translateY(0);   }
-        }
-      `}</style>
-
+      <style>{GLOBAL_STYLES}</style>
       <div
         style={{
           minHeight: "100vh",
-          background:
-            "linear-gradient(160deg, #0f172a 0%, #0d1117 60%, #0f172a 100%)",
+          background: "#ffffff",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "60px 24px 40px",
+          padding: "40px 0",
+          position: "relative",
         }}
       >
-        <Navbar />
-        <Branding />
+        {/* ── HEADER ── */}
+        <div style={{ textAlign: "center", marginBottom: "32px" }}>
+          <div
+            style={{
+              fontFamily: "'Press Start 2P', monospace",
+              fontSize: "20px",
+              letterSpacing: "4px",
+              animation: "glitchColor 8s infinite",
+              marginBottom: "10px",
+              textShadow: "3px 3px 0 #ccc",
+            }}
+          >
+            ⚡ STREAMLINE
+          </div>
+          <div
+            style={{
+              fontFamily: "'Press Start 2P', monospace",
+              fontSize: "7px",
+              color: "#999",
+              letterSpacing: "3px",
+            }}
+          >
+            EXTRACT . DIRECT . LOCAL
+          </div>
+        </div>
 
-        {/* ── SPLIT PANEL ── */}
-        <SplitPanel
-          fileList={fileList}
-          selectedFiles={selectedFiles}
-          onToggle={toggleFile}
-          logs={logs}
-          extracting={extracting}
-          done={done}
-          phase={phase}
-        />
+        {/* ── STEP INDICATOR ── */}
+        <StepIndicator current={step} />
 
-        {/* ── BUTTONS + PROGRESS ── */}
+        {/* ── CONVEYOR BELT — 3 panels always present ── */}
+        <ConveyorBelt step={step}>
+          {/* PANEL 1 — File Selection */}
+          <PanelWrapper isActive={step === 1}>
+            <Panel1Content
+              fileList={fileList}
+              selectedFiles={selectedFiles}
+              onToggle={toggleFile}
+              onNext={startExtraction}
+              isActive={step === 1}
+            />
+          </PanelWrapper>
+
+          {/* PANEL 2 — Terminal */}
+          <PanelWrapper isActive={step === 2}>
+            <Panel2Content
+              logs={logs}
+              progress={progress}
+              extracting={extracting}
+              onCancel={cancelProcess}
+              isActive={step === 2}
+              isPseudo={step < 2}
+            />
+          </PanelWrapper>
+
+          {/* PANEL 3 — Mission Complete */}
+          <PanelWrapper isActive={step === 3}>
+            <Panel3Content
+              selectedFiles={selectedFiles}
+              onReset={reset}
+              isActive={step === 3}
+              showDownload={showDownload}
+              isPseudo={step < 3}
+            />
+          </PanelWrapper>
+        </ConveyorBelt>
+
+        {/* ── FOOTER ── */}
         <div
           style={{
-            marginTop: "16px",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
+            marginTop: "32px",
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "6px",
+            color: "#ccc",
+            letterSpacing: "2px",
+            animation: "blink 3s infinite",
           }}
         >
-          <ActionButtons
-            onExtract={startExtraction}
-            onCancel={cancelProcess}
-            onReset={resetToSelection}
-            extracting={extracting}
-            noneSelected={selectedFiles.length === 0}
-            progress={progress}
-            done={done}
-            phase={phase}
-          />
+          STREAMLINE v1.0 — ALL SYSTEMS OPERATIONAL
         </div>
       </div>
     </>
