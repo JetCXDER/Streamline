@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCube } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-cube";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MOCK DATA — Replace with real API response from /listZip when backend ready
@@ -146,6 +150,26 @@ const GLOBAL_STYLES = `
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: #fff; border-left: 2px solid #000; }
   ::-webkit-scrollbar-thumb { background: #000; }
+
+  /* Swiper customization */
+  .swiper-container {
+    width: 100%;
+    padding: 0;
+  }
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+  }
+
+  .swiper-3d .swiper-slide-shadow-left,
+  .swiper-3d .swiper-slide-shadow-right,
+  .swiper-3d .swiper-slide-shadow-top,
+  .swiper-3d .swiper-slide-shadow-bottom {
+    background-image: none;
+  }
 `;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -641,40 +665,7 @@ function Panel3Content({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — CONVEYOR BELT (3 panels always visible, active one centered)
-// ─────────────────────────────────────────────────────────────────────────────
-function ConveyorBelt({ step, children }) {
-  // Each panel is 340px wide with 24px gap
-  // Active panel is always centered on screen
-  const PANEL_WIDTH = 340;
-  const GAP = 24;
-  const STRIDE = PANEL_WIDTH + GAP;
-
-  // translateX moves the whole row so active panel is centered
-  // step 1: panel[0] centered → offset = 0
-  // step 2: panel[1] centered → offset = -STRIDE
-  // step 3: panel[2] centered → offset = -STRIDE * 2
-  const translateX = -(step - 1) * STRIDE;
-
-  return (
-    <div style={{ overflow: "hidden", width: "100%", maxWidth: "900px" }}>
-      <div
-        style={{
-          display: "flex",
-          gap: `${GAP}px`,
-          transform: `translateX(calc(50% - ${PANEL_WIDTH / 2}px + ${translateX}px))`,
-          transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-          willChange: "transform",
-        }}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — SINGLE PANEL WRAPPER
+// PANEL WRAPPER
 // ─────────────────────────────────────────────────────────────────────────────
 function PanelWrapper({ isActive, children }) {
   return (
@@ -702,7 +693,7 @@ function PanelWrapper({ isActive, children }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MAIN — ZipExtractor
+// MAIN — ZipExtractor with Swiper
 // ─────────────────────────────────────────────────────────────────────────────
 export default function ZipExtractor({ fileList = MOCK_FILES }) {
   const [step, setStep] = useState(1);
@@ -711,6 +702,7 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
   const [extracting, setExtracting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showDownload, setShowDownload] = useState(false);
+  const swiperRef = useRef(null);
   const eventSourceRef = useRef(null);
   const cancelledRef = useRef(false);
 
@@ -721,6 +713,13 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
       prev.includes(file) ? prev.filter((f) => f !== file) : [...prev, file],
     );
   };
+
+  // Update Swiper slide when step changes
+  useEffect(() => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideTo(step - 1, 500);
+    }
+  }, [step]);
 
   // ── Step 1 → 2 ───────────────────────────────────────────────────────────
   const startExtraction = async () => {
@@ -734,31 +733,6 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
 
     await new Promise((res) => setTimeout(res, 500));
     addLog(`Starting extraction of ${selectedFiles.length} file(s)...`);
-
-    // ── MOCK SIMULATION ──
-    // When backend is ready, replace this block with:
-    //
-    // await fetch("/extractZip", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ zip: "example.zip", files: selectedFiles }),
-    // });
-    // const es = new EventSource("/extractZip");
-    // eventSourceRef.current = es;
-    // let completed = 0;
-    // es.onmessage = (e) => {
-    //   addLog(e.data);
-    //   if (e.data.startsWith("✓")) {
-    //     completed++;
-    //     setProgress(Math.round((completed / selectedFiles.length) * 100));
-    //   }
-    // };
-    // es.onerror = () => {
-    //   es.close(); setExtracting(false);
-    //   setProgress(100);
-    //   setStep(3);
-    //   setTimeout(() => setShowDownload(true), 600);
-    // };
 
     for (let i = 0; i < selectedFiles.length; i++) {
       if (cancelledRef.current) break;
@@ -776,9 +750,7 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
       setExtracting(false);
       setProgress(100);
       await new Promise((res) => setTimeout(res, 600));
-      // Step 2 → 3
       setStep(3);
-      // Download button appears 600ms after panel 3 slides in
       setTimeout(() => setShowDownload(true), 600);
     } else {
       setExtracting(false);
@@ -793,7 +765,6 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
       eventSourceRef.current.close();
       eventSourceRef.current = null;
     }
-    // await fetch("/cancel", { method: "POST" });
     addLog("Aborted by user.");
     setExtracting(false);
     setProgress(0);
@@ -821,8 +792,12 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "40px 0",
+          padding: "40px 20px",
           position: "relative",
+          width: "100%",
+          maxWidth: "100vw",
+          boxSizing: "border-box",
+          overflowX: "hidden",
         }}
       >
         {/* ── HEADER ── */}
@@ -854,47 +829,93 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
         {/* ── STEP INDICATOR ── */}
         <StepIndicator current={step} />
 
-        {/* ── CONVEYOR BELT — 3 panels always present ── */}
-        <ConveyorBelt step={step}>
+        {/* ── SWIPER SLIDER — 3 panels ── */}
+        <Swiper
+          ref={swiperRef}
+          modules={[EffectCube]}
+          effect="cube"
+          cubeEffect={{
+            shadow: true,
+            slideShadows: true,
+            shadowOffset: 20,
+            shadowScale: 0.94,
+          }}
+          grabCursor={true}
+          keyboard={true}
+          centeredSlides={true}
+          slidesPerView={1}
+          allowTouchMove={false}
+          initialSlide={0}
+          speed={500}
+          onSlideChange={(swiper) => setStep(swiper.activeIndex + 1)}
+          style={{
+            width: "100%",
+            maxWidth: "450px",
+            marginBottom: "32px",
+          }}
+        >
           {/* PANEL 1 — File Selection */}
-          <PanelWrapper isActive={step === 1}>
-            <Panel1Content
-              fileList={fileList}
-              selectedFiles={selectedFiles}
-              onToggle={toggleFile}
-              onNext={startExtraction}
-              isActive={step === 1}
-            />
-          </PanelWrapper>
+          <SwiperSlide
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <PanelWrapper isActive={step === 1}>
+              <Panel1Content
+                fileList={fileList}
+                selectedFiles={selectedFiles}
+                onToggle={toggleFile}
+                onNext={startExtraction}
+                isActive={step === 1}
+              />
+            </PanelWrapper>
+          </SwiperSlide>
 
           {/* PANEL 2 — Terminal */}
-          <PanelWrapper isActive={step === 2}>
-            <Panel2Content
-              logs={logs}
-              progress={progress}
-              extracting={extracting}
-              onCancel={cancelProcess}
-              isActive={step === 2}
-              isPseudo={step < 2}
-            />
-          </PanelWrapper>
+          <SwiperSlide
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <PanelWrapper isActive={step === 2}>
+              <Panel2Content
+                logs={logs}
+                progress={progress}
+                extracting={extracting}
+                onCancel={cancelProcess}
+                isActive={step === 2}
+                isPseudo={step < 2}
+              />
+            </PanelWrapper>
+          </SwiperSlide>
 
           {/* PANEL 3 — Mission Complete */}
-          <PanelWrapper isActive={step === 3}>
-            <Panel3Content
-              selectedFiles={selectedFiles}
-              onReset={reset}
-              isActive={step === 3}
-              showDownload={showDownload}
-              isPseudo={step < 3}
-            />
-          </PanelWrapper>
-        </ConveyorBelt>
+          <SwiperSlide
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <PanelWrapper isActive={step === 3}>
+              <Panel3Content
+                selectedFiles={selectedFiles}
+                onReset={reset}
+                isActive={step === 3}
+                showDownload={showDownload}
+                isPseudo={step < 3}
+              />
+            </PanelWrapper>
+          </SwiperSlide>
+        </Swiper>
 
         {/* ── FOOTER ── */}
         <div
           style={{
-            marginTop: "32px",
             fontFamily: "'Press Start 2P', monospace",
             fontSize: "6px",
             color: "#ccc",
