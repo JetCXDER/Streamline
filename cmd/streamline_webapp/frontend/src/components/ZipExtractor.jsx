@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/effect-cube";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MOCK DATA — Replace with real API response from /listZip when backend ready
+// MOCK DATA — Will be replaced with real API response from /listZip
 // ─────────────────────────────────────────────────────────────────────────────
 const MOCK_FILES = [
   "project/src/main.go",
@@ -258,6 +258,7 @@ function Panel1Content({
   onToggle,
   onNext,
   isActive,
+  loading,
 }) {
   const allSelected = selectedFiles.length === fileList.length;
 
@@ -303,13 +304,13 @@ function Panel1Content({
           return (
             <div
               key={file}
-              onClick={() => isActive && onToggle(file)}
+              onClick={() => isActive && !loading && onToggle(file)}
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
                 padding: "8px 12px",
-                cursor: isActive ? "pointer" : "default",
+                cursor: isActive && !loading ? "pointer" : "default",
                 background: checked
                   ? "#000"
                   : idx % 2 === 0
@@ -355,6 +356,7 @@ function Panel1Content({
           <button
             className="retro-btn"
             onClick={toggleAll}
+            disabled={loading}
             style={{ fontSize: "7px", padding: "8px 10px" }}
           >
             {allSelected ? "☐ DESELECT" : "■ ALL"}
@@ -362,10 +364,10 @@ function Panel1Content({
           <button
             className="retro-btn primary"
             onClick={onNext}
-            disabled={selectedFiles.length === 0}
+            disabled={selectedFiles.length === 0 || loading}
             style={{ fontSize: "7px", padding: "8px 10px" }}
           >
-            EXTRACT ▶
+            {loading ? "LOADING..." : "EXTRACT ▶"}
           </button>
         </div>
       )}
@@ -693,15 +695,22 @@ function PanelWrapper({ isActive, children }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MAIN — ZipExtractor with Swiper
+// MAIN — ZipExtractor with Swiper & Backend Integration
 // ─────────────────────────────────────────────────────────────────────────────
-export default function ZipExtractor({ fileList = MOCK_FILES }) {
+export default function ZipExtractor({
+  token,
+  apiBase = "http://localhost:8080",
+}) {
   const [step, setStep] = useState(1);
+  const [zipPath, setZipPath] = useState("test_data/test_archive.zip"); // Default for testing
+  const [fileList, setFileList] = useState(MOCK_FILES);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [logs, setLogs] = useState([]);
   const [extracting, setExtracting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showDownload, setShowDownload] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const swiperRef = useRef(null);
   const eventSourceRef = useRef(null);
   const cancelledRef = useRef(false);
@@ -721,7 +730,45 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     }
   }, [step]);
 
-  // ── Step 1 → 2 ───────────────────────────────────────────────────────────
+  // ── List ZIP files from backend ─────────────────────────────────────────
+  const listZipFiles = async () => {
+    if (!zipPath.trim()) {
+      setError("Please enter a ZIP file path");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        `${apiBase}/api/listZip?zip=${encodeURIComponent(zipPath)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to list ZIP files");
+      }
+
+      const data = await response.json();
+      setFileList(data.files || []);
+      setSelectedFiles([]);
+      addLog(`✓ Loaded ${data.count} files from ZIP`);
+    } catch (err) {
+      setError(`Error: ${err.message}`);
+      addLog(`ERROR: ${err.message}`);
+      console.error("Error listing ZIP:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ── Step 1 → 2: Start Extraction ───────────────────────────────────────
   const startExtraction = async () => {
     if (selectedFiles.length === 0) return;
     setStep(2);
@@ -729,30 +776,80 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     setProgress(0);
     setShowDownload(false);
     setExtracting(true);
+    setError(null);
     cancelledRef.current = false;
 
     await new Promise((res) => setTimeout(res, 500));
     addLog(`Starting extraction of ${selectedFiles.length} file(s)...`);
 
-    for (let i = 0; i < selectedFiles.length; i++) {
-      if (cancelledRef.current) break;
-      await new Promise((res) => setTimeout(res, 500));
-      if (cancelledRef.current) break;
-      addLog(`Extracting: ${selectedFiles[i]}`);
-      await new Promise((res) => setTimeout(res, 400));
-      if (cancelledRef.current) break;
-      addLog(`✓ Done: ${selectedFiles[i]}`);
-      setProgress(Math.round(((i + 1) / selectedFiles.length) * 100));
-    }
+    try {
+      const response = await fetch(`${apiBase}/api/extractZip`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          zip: zipPath,
+          files: selectedFiles,
+          outDir: "extracted_files",
+        }),
+      });
 
-    if (!cancelledRef.current) {
-      addLog("All files extracted successfully.");
-      setExtracting(false);
-      setProgress(100);
-      await new Promise((res) => setTimeout(res, 600));
-      setStep(3);
-      setTimeout(() => setShowDownload(true), 600);
-    } else {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Extraction failed");
+      }
+
+      // Handle Server-Sent Events (SSE) for streaming logs
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        if (cancelledRef.current) {
+          reader.cancel();
+          break;
+        }
+
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop(); // Keep incomplete line in buffer
+
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const logMessage = line.slice(6);
+            addLog(logMessage);
+
+            // Update progress based on log message
+            if (selectedFiles.length > 0) {
+              const extractedCount = logs.filter((l) =>
+                l.includes("✓ Done:"),
+              ).length;
+              setProgress(
+                Math.round((extractedCount / selectedFiles.length) * 100),
+              );
+            }
+          }
+        }
+      }
+
+      if (!cancelledRef.current) {
+        setProgress(100);
+        setExtracting(false);
+        addLog("✓ All files extracted successfully.");
+        await new Promise((res) => setTimeout(res, 600));
+        setStep(3);
+        setTimeout(() => setShowDownload(true), 600);
+      }
+    } catch (err) {
+      if (!cancelledRef.current) {
+        setError(`Extraction failed: ${err.message}`);
+        addLog(`ERROR: ${err.message}`);
+      }
       setExtracting(false);
     }
   };
@@ -778,6 +875,8 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
     setProgress(0);
     setExtracting(false);
     setShowDownload(false);
+    setError(null);
+    setLoading(false);
     cancelledRef.current = false;
   };
 
@@ -826,6 +925,69 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
           </div>
         </div>
 
+        {/* ── ZIP INPUT (Panel 0) ── */}
+        {step === 1 && (
+          <div
+            style={{
+              marginBottom: "32px",
+              padding: "16px",
+              border: "2px solid #000",
+              background: "#f5f5f5",
+              maxWidth: "350px",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: "7px",
+                marginBottom: "10px",
+                color: "#000",
+              }}
+            >
+              ZIP PATH:
+            </div>
+            <input
+              type="text"
+              value={zipPath}
+              onChange={(e) => setZipPath(e.target.value)}
+              placeholder="e.g., test_data/test_archive.zip"
+              style={{
+                width: "100%",
+                padding: "8px",
+                border: "2px solid #000",
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: "7px",
+                marginBottom: "10px",
+                boxSizing: "border-box",
+              }}
+              disabled={loading}
+            />
+            <button
+              className="retro-btn primary"
+              onClick={listZipFiles}
+              disabled={loading}
+              style={{ width: "100%", fontSize: "7px" }}
+            >
+              {loading ? "LOADING..." : "📋 LIST FILES"}
+            </button>
+            {error && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  padding: "8px",
+                  background: "#ffcccc",
+                  border: "2px solid #cc0000",
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: "6px",
+                  color: "#cc0000",
+                }}
+              >
+                {error}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* ── STEP INDICATOR ── */}
         <StepIndicator current={step} />
 
@@ -869,6 +1031,7 @@ export default function ZipExtractor({ fileList = MOCK_FILES }) {
                 onToggle={toggleFile}
                 onNext={startExtraction}
                 isActive={step === 1}
+                loading={loading}
               />
             </PanelWrapper>
           </SwiperSlide>

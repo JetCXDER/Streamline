@@ -1,11 +1,15 @@
 # Secrets and config
 .env
+.env.local
 
 # Logs and error reports
 logs/
 errors.json
 
 # IDE and OS clutter
+config/*.json
+/dist
+/node_modules
 *.DS_Store
 *.swp
 .vscode/

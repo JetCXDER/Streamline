@@ -80,7 +80,7 @@ func cancelHandler(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-func main() {
+func startServer() {
     http.HandleFunc("/listZip", listZipHandler)
     http.HandleFunc("/extractZip", extractZipHandler)
     http.HandleFunc("/cancel", cancelHandler)
