@@ -6,12 +6,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 
 	streamline_core "Streamline/cmd/streamline_core"
 	"Streamline/cmd/streamline_webapp/backend/middleware"
 	"Streamline/cmd/streamline_webapp/backend/models"
+	"Streamline/cmd/streamline_webapp/backend/services"
 )
 
 // ExtractionManager manages ongoing extractions to prevent conflicts
@@ -43,10 +45,14 @@ func ListZipHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// GET request - use query parameter
 		zipPath := r.URL.Query().Get("zip")
-		if zipPath == "" {
-			sendErrorResponse(w, "Missing 'zip' query parameter", http.StatusBadRequest)
-			return
-		}
+			if zipPath == "" {
+				zipPath = r.URL.Query().Get("fileId")
+			}
+
+			if zipPath == "" {
+				sendErrorResponse(w, "Missing 'zip' or 'fileId' query parameter", http.StatusBadRequest)
+				return
+			}
 		req.ZipPath = zipPath
 	} else {
 		// POST request - use JSON body
@@ -63,7 +69,25 @@ func ListZipHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// List files in ZIP
-	files, err := streamline_core.ListZipFiles(req.ZipPath)
+	accessToken := middleware.GetAccessToken(r)
+
+	tempPath, err := services.DownloadDriveFile(
+		r.Context(),
+		req.ZipPath,
+		accessToken,
+	)
+	if err != nil {
+		sendErrorResponse(w, fmt.Sprintf("Drive download failed: %v", err), http.StatusInternalServerError)
+		return
+	}
+	defer os.Remove(tempPath)
+
+	files, err := streamline_core.ListZipFiles(tempPath)
+	if err != nil {
+		sendErrorResponse(w, fmt.Sprintf("Failed to list ZIP files: %v", err), http.StatusInternalServerError)
+		return
+	}
+
 	if err != nil {
 		log.Printf("Error listing ZIP files: %v", err)
 		sendErrorResponse(w, fmt.Sprintf("Failed to list ZIP files: %v", err), http.StatusInternalServerError)
@@ -142,7 +166,17 @@ func ExtractZipHandler(w http.ResponseWriter, r *http.Request) {
 		defer close(logChan)
 
 		// Perform extraction
-		err := streamline_core.ExtractSelectedFiles(ctx, req.ZipPath, req.OutDir, req.Files, logChan)
+		accessToken := middleware.GetAccessToken(r)
+
+		tempPath, err := services.DownloadDriveFile(ctx, req.ZipPath, accessToken)
+		if err != nil {
+			logChan <- fmt.Sprintf("ERROR: Drive download failed: %v", err)
+			close(logChan)
+			return
+		}
+		defer os.Remove(tempPath)
+
+		err = streamline_core.ExtractSelectedFiles(ctx, tempPath, req.OutDir, req.Files, logChan)
 		if err != nil {
 			logChan <- fmt.Sprintf("ERROR: %v", err)
 			log.Printf("Extraction [%s] failed: %v", extractionID, err)

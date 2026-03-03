@@ -1,78 +1,47 @@
 import React, { useState } from "react";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import LoginLandingPage from "./components/Loginlandingpage";
 import ZipExtractor from "./components/ZipExtractor";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showExtractor, setShowExtractor] = useState(false);
 
-  const handleLoginSuccess = (credentialResponse) => {
-    console.log("Login successful!");
-    console.log("Token:", credentialResponse.credential);
-
-    setToken(credentialResponse.credential);
-
-    // Decode JWT to get user info (optional)
-    const base64Url = credentialResponse.credential.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join(""),
-    );
-    const decoded = JSON.parse(jsonPayload);
-
-    setUser(decoded);
-    console.log("User:", decoded);
+  const handleSelectFile = (fileInfo) => {
+    console.log("File selected:", fileInfo);
+    setSelectedFile(fileInfo);
+    setShowExtractor(true);
   };
 
-  const handleLoginError = () => {
-    console.log("Login failed");
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    setToken(null);
+  const handleBackToLoginLanding = () => {
+    setSelectedFile(null);
+    setShowExtractor(false);
   };
 
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <div className="App">
-        <header className="App-header">
-          <h1>📦 Streamline - ZIP Extractor</h1>
-
-          {!user ? (
-            <div className="login-container">
-              <p>Please login with Google to continue</p>
-              <GoogleLogin
-                onSuccess={handleLoginSuccess}
-                onError={handleLoginError}
-              />
-            </div>
-          ) : (
-            <div className="user-container">
-              <p>Welcome, {user.name}!</p>
-              <img src={user.picture} alt={user.name} className="user-avatar" />
-              <button onClick={handleLogout} className="logout-btn">
-                Logout
-              </button>
-            </div>
-          )}
-        </header>
-
-        {user && token ? (
-          <ZipExtractor
-            token={token}
-            apiBase={import.meta.env.VITE_API_BASE_URL}
-          />
+        {!showExtractor ? (
+          // PAGE 1: LOGIN + LANDING (combined)
+          <LoginLandingPage onSelectFile={handleSelectFile} />
         ) : (
-          <div className="login-prompt">
-            <p>Login to use the ZIP extractor</p>
-          </div>
+          // PAGE 2: EXTRACTOR (Streamline Web Application with 3 panels)
+          <>
+            <header className="App-header">
+              <div className="user-info-header">
+                <h1>📦 Streamline - ZIP Extractor</h1>
+                <button onClick={handleBackToLoginLanding} className="back-btn">
+                  ← Back
+                </button>
+              </div>
+            </header>
+            <ZipExtractor
+              token={localStorage.getItem("google_access_token")}
+              apiBase={import.meta.env.VITE_API_BASE_URL}
+              selectedFile={selectedFile}
+            />
+          </>
         )}
       </div>
     </GoogleOAuthProvider>

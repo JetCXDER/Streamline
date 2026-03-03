@@ -7,7 +7,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"Streamline/cmd/streamline_webapp/backend/handlers"
 )
+
+
+
 
 var currentCancel context.CancelFunc
 
@@ -80,11 +85,11 @@ func cancelHandler(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-func startServer() {
-    http.HandleFunc("/listZip", listZipHandler)
-    http.HandleFunc("/extractZip", extractZipHandler)
-    http.HandleFunc("/cancel", cancelHandler)
-
-    fmt.Println("WebApp backend running on :8080")
-    log.Fatal(http.ListenAndServe(":8080", nil))
-}
+func startServer() { 
+    // Register the correct API routes 
+    http.HandleFunc("/api/listZip", handlers.ListZipHandler) 
+    http.HandleFunc("/api/extractZip", handlers.ExtractZipHandler) 
+    http.HandleFunc("/api/cancel", handlers.CancelHandler) 
+        fmt.Println("WebApp backend running on :8080")
+        log.Fatal(http.ListenAndServe(":8080", nil)) 
+    }
