@@ -1,3 +1,5 @@
+//go:build ignore
+
 package main
 
 import (
@@ -9,6 +11,8 @@ import (
 	"net/http"
 
 	"Streamline/cmd/streamline_webapp/backend/handlers"
+	middlewarePackage "Streamline/cmd/streamline_webapp/backend/middleware"
+	"Streamline/cmd/streamline_webapp/backend/services"
 )
 
 
@@ -18,17 +22,25 @@ var currentCancel context.CancelFunc
 
 // List files inside a ZIP
 func listZipHandler(w http.ResponseWriter, r *http.Request) {
-    zipPath := r.URL.Query().Get("zip")
-    if zipPath == "" {
-        http.Error(w, "zip parameter required", http.StatusBadRequest)
+    fileID := r.URL.Query().Get("fileId")
+    if fileID == "" {
+        http.Error(w, "fileId parameter required", http.StatusBadRequest)
         return
     }
 
-    files, err := streamline_core.ListZipFiles(zipPath)
+    // Get token from Authorization header
+    accessToken := middlewarePackage.GetAccessToken(r)
+
+    // Download the file from Google Drive using fileID + token
+    zipPath, err := services.DownloadDriveFile(r.Context(), fileID, accessToken)
     if err != nil {
-        http.Error(w, fmt.Sprintf("Failed to list zip: %v", err), http.StatusInternalServerError)
+        http.Error(w, fmt.Sprintf("Failed to download file: %v", err), http.StatusInternalServerError)
         return
     }
+
+    // Now list files inside the downloaded ZIP
+    files, err := streamline_core.ListZipFiles(zipPath)
+
 
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(map[string][]string{"files": files})
@@ -87,9 +99,9 @@ func cancelHandler(w http.ResponseWriter, r *http.Request) {
 
 func startServer() { 
     // Register the correct API routes 
-    http.HandleFunc("/api/listZip", handlers.ListZipHandler) 
-    http.HandleFunc("/api/extractZip", handlers.ExtractZipHandler) 
-    http.HandleFunc("/api/cancel", handlers.CancelHandler) 
+    http.Handle("/api/listZip", middlewarePackage.CORSMultiple("http://localhost:5173,http://localhost:3000")(middlewarePackage.AuthMiddleware(http.HandlerFunc(handlers.ListZipHandler)))) 
+    http.Handle("/api/extractZip", middlewarePackage.CORSMultiple("http://localhost:5173,http://localhost:3000")(middlewarePackage.AuthMiddleware(http.HandlerFunc(handlers.ExtractZipHandler)))) 
+    http.Handle("/api/cancel", middlewarePackage.CORSMultiple("http://localhost:5173,http://localhost:3000")(middlewarePackage.AuthMiddleware(http.HandlerFunc(handlers.CancelHandler)))) 
         fmt.Println("WebApp backend running on :8080")
         log.Fatal(http.ListenAndServe(":8080", nil)) 
     }

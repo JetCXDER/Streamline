@@ -5,38 +5,6 @@ import "swiper/css";
 import "swiper/css/effect-cube";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MOCK DATA — Will be replaced with real API response from /listZip
-// ─────────────────────────────────────────────────────────────────────────────
-/*const MOCK_FILES = [
-  "project/src/main.go",
-  "project/src/config.go",
-  "project/src/util.go",
-  "project/assets/logo.png",
-  "project/assets/banner.jpg",
-  "project/assets/icons/arrow.svg",
-  "project/docs/README.md",
-  "project/docs/API.md",
-  "project/scripts/build.sh",
-  "project/scripts/deploy.sh",
-];
-
-// Pseudo content for dimmed panels — swap with real data before deploying
-const PSEUDO_LOGS = [
-  "000 Starting extraction...",
-  "001 Extracting: project/src/main.go",
-  "002 ✓ Done: project/src/main.go",
-  "003 Extracting: project/assets/logo.png",
-  "004 ✓ Done: project/assets/logo.png",
-  "005 All files extracted successfully.",
-];
-
-const PSEUDO_DONE_FILES = [
-  "project/src/main.go",
-  "project/src/config.go",
-  "project/assets/logo.png",
-];*/
-
-// ─────────────────────────────────────────────────────────────────────────────
 // GLOBAL STYLES
 // ─────────────────────────────────────────────────────────────────────────────
 const GLOBAL_STYLES = `
@@ -731,8 +699,14 @@ export default function ZipExtractor({
           },
         );
 
+        if (!response.ok) {
+          const errorData = await response.json();
+          addLog(`ERROR: ${errorData.message || "Failed to list ZIP files"}`);
+          return;
+        }
         const data = await response.json();
         setFileList(data.files || []);
+
         addLog(`✓ Loaded ${data.files?.length || 0} files`);
       } catch (err) {
         console.error(err);

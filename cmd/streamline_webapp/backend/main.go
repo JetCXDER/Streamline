@@ -77,25 +77,31 @@ func setupRoutes(cfg *Config) http.Handler {
 
 	// Health check endpoint (public, no auth required)
 	mux.HandleFunc("/health", wrapHandler(
-		middleware.CORS(cfg.AllowedOrigins)(
+		middleware.CORSMultiple(cfg.AllowedOrigins)(
 			middleware.OptionalAuthMiddleware(
 				http.HandlerFunc(handlers.HealthHandler)))))
 
 	// ZIP endpoints (protected by auth)
 	mux.HandleFunc("/api/listZip", wrapHandler(
-		middleware.CORS(cfg.AllowedOrigins)(
+		middleware.CORSMultiple(cfg.AllowedOrigins)(
 			middleware.OptionalAuthMiddleware(
 				http.HandlerFunc(handlers.ListZipHandler)))))
 
 	mux.HandleFunc("/api/extractZip", wrapHandler(
-		middleware.CORS(cfg.AllowedOrigins)(
+		middleware.CORSMultiple(cfg.AllowedOrigins)(
 			middleware.OptionalAuthMiddleware(
 				http.HandlerFunc(handlers.ExtractZipHandler)))))
 
 	mux.HandleFunc("/api/cancel", wrapHandler(
-		middleware.CORS(cfg.AllowedOrigins)(
+		middleware.CORSMultiple(cfg.AllowedOrigins)(
 			middleware.OptionalAuthMiddleware(
 				http.HandlerFunc(handlers.CancelHandler)))))
+
+	mux.HandleFunc("/api/downloadExtracted", wrapHandler(
+    middleware.CORSMultiple(cfg.AllowedOrigins)(
+        middleware.OptionalAuthMiddleware(
+            http.HandlerFunc(handlers.DownloadExtractedHandler)))))
+
 
 	return mux
 }

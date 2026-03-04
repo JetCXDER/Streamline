@@ -67,9 +67,11 @@ func OptionalAuthMiddleware(next http.Handler) http.Handler {
 //GetAccessToken extracts the Bearer token from the Authorization header and returns it as a string. If the header is missing or malformed, it returns an empty string.
 func GetAccessToken(r *http.Request) string {
 		authHeader := r.Header.Get("Authorization")
-		if authHeader == "" {
-			return ""
+		if strings.HasPrefix(authHeader, "Bearer ") {
+			return strings.TrimPrefix(authHeader, "Bearer ")
 		}
+		return ""
+
 
 		parts := strings.SplitN(authHeader, " ", 2)
 		if len(parts) != 2 || parts[0] != "Bearer" {

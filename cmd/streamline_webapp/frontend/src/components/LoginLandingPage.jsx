@@ -339,9 +339,8 @@ function createAndOpenPicker(callback) {
   const picker = new window.google.picker.PickerBuilder()
     .addView(
       new window.google.picker.DocsView(window.google.picker.ViewId.DOCS)
-        .setMimeTypes(
-          "application/zip,application/x-rar-compressed,application/x-7z-compressed",
-        )
+        .setMimeTypes("application/zip")
+
         .setIncludeFolders(true),
     )
     .setOAuthToken(token)

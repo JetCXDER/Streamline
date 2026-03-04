@@ -29,6 +29,10 @@ var extractionManager = &ExtractionManager{
 
 // ListZipHandler handles requests to list files in a ZIP archive
 func ListZipHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("🔥 HIT ListZipHandler 🔥")
+	log.Printf("FULL URL: %s", r.URL.String())
+	log.Printf("zip param: %s", r.URL.Query().Get("zip"))
+	log.Printf("fileId param: %s", r.URL.Query().Get("fileId"))
 	// Validate request method
 	if r.Method != http.MethodGet && r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -295,4 +299,18 @@ func sendErrorResponse(w http.ResponseWriter, message string, statusCode int) {
 // getCurrentTimestamp returns current Unix timestamp in milliseconds
 func getCurrentTimestamp() int64 {
 	return time.Now().UnixMilli()
+}
+
+func DownloadExtractedHandler(w http.ResponseWriter, r *http.Request) {
+    fileID := r.URL.Query().Get("fileId")
+    if fileID == "" {
+        http.Error(w, "fileId required", http.StatusBadRequest)
+        return
+    }
+
+    zipPath := fmt.Sprintf("./output/%s_extracted.zip", fileID)
+    w.Header().Set("Content-Type", "application/zip")
+    w.Header().Set("Content-Disposition", "attachment; filename=extracted_files.zip")
+
+    http.ServeFile(w, r, zipPath)
 }
